@@ -30,6 +30,84 @@ macro_rules! ld {
     };
 }
 
+macro_rules! ld_indexed {
+    ($inst:expr, $machine:expr, $size:expr) => {
+        let i = VXtype($inst);
+        let sew = $machine.vsew();
+        let vd = i.vd();
+        let addr = $machine.registers()[i.rs1()].to_u64();
+        for j in 0..$machine.vl() as usize {
+            if i.vm() == 0 && !$machine.get_bit(0, j as usize) {
+                continue;
+            }
+            match sew {
+                8 => {
+                    let offset = U8::read($machine.element_ref(i.vs2(), sew, j)).u64();
+                    let data = $machine.memory_mut().load_bytes(addr + offset, $size)?;
+                    $machine
+                        .element_mut(vd, $size << 3, j as usize)
+                        .copy_from_slice(&data);
+                }
+                16 => {
+                    let offset = U16::read($machine.element_ref(i.vs2(), sew, j)).u64();
+                    let data = $machine.memory_mut().load_bytes(addr + offset, $size)?;
+                    $machine
+                        .element_mut(vd, $size << 3, j as usize)
+                        .copy_from_slice(&data);
+                }
+                32 => {
+                    let offset = U32::read($machine.element_ref(i.vs2(), sew, j)).u64();
+                    let data = $machine.memory_mut().load_bytes(addr + offset, $size)?;
+                    $machine
+                        .element_mut(vd, $size << 3, j as usize)
+                        .copy_from_slice(&data);
+                }
+                64 => {
+                    let offset = U64::read($machine.element_ref(i.vs2(), sew, j)).u64();
+                    let data = $machine.memory_mut().load_bytes(addr + offset, $size)?;
+                    $machine
+                        .element_mut(vd, $size << 3, j as usize)
+                        .copy_from_slice(&data);
+                }
+                128 => {
+                    let offset = U128::read($machine.element_ref(i.vs2(), sew, j)).u64();
+                    let data = $machine.memory_mut().load_bytes(addr + offset, $size)?;
+                    $machine
+                        .element_mut(vd, $size << 3, j as usize)
+                        .copy_from_slice(&data);
+                }
+                256 => {
+                    let offset = U256::read($machine.element_ref(i.vs2(), sew, j)).u64();
+                    let data = $machine.memory_mut().load_bytes(addr + offset, $size)?;
+                    $machine
+                        .element_mut(vd, $size << 3, j as usize)
+                        .copy_from_slice(&data);
+                }
+                512 => {
+                    let offset = U512::read($machine.element_ref(i.vs2(), sew, j)).u64();
+                    let data = $machine.memory_mut().load_bytes(addr + offset, $size)?;
+                    $machine
+                        .element_mut(vd, $size << 3, j as usize)
+                        .copy_from_slice(&data);
+                }
+                1024 => {
+                    let offset = U1024::read($machine.element_ref(i.vs2(), sew, j)).u64();
+                    let data = $machine.memory_mut().load_bytes(addr + offset, $size)?;
+                    $machine
+                        .element_mut(vd, $size << 3, j as usize)
+                        .copy_from_slice(&data);
+                }
+                _ => {
+                    return Err(Error::InvalidSew(format!(
+                        "The SEW can only be 8, 16, ..., 512, 1024. It's found as {} in ld_indexed",
+                        sew
+                    )));
+                }
+            }
+        }
+    };
+}
+
 macro_rules! sd {
     ($inst:expr, $machine:expr, $vl:expr, $stride:expr, $size:expr, $mask:expr) => {
         let i = VXtype($inst);
@@ -48,6 +126,68 @@ macro_rules! sd {
             $machine
                 .memory_mut()
                 .store_bytes(addr + stride * j, &data)?;
+        }
+    };
+}
+
+macro_rules! sd_indexed {
+    ($inst:expr, $machine:expr, $size:expr) => {
+        let i = VXtype($inst);
+        let sew = $machine.vsew();
+        let vd = i.vd();
+        let addr = $machine.registers()[i.rs1()].to_u64();
+        for j in 0..$machine.vl() as usize {
+            if i.vm() == 0 && !$machine.get_bit(0, j as usize) {
+                continue;
+            }
+            match sew {
+                8 => {
+                    let offset = U8::read($machine.element_ref(i.vs2(), sew, j)).u64();
+                    let data = $machine.element_ref(vd, $size << 3, j as usize).to_vec();
+                    $machine.memory_mut().store_bytes(addr + offset, &data)?;
+                }
+                16 => {
+                    let offset = U16::read($machine.element_ref(i.vs2(), sew, j)).u64();
+                    let data = $machine.element_ref(vd, $size << 3, j as usize).to_vec();
+                    $machine.memory_mut().store_bytes(addr + offset, &data)?;
+                }
+                32 => {
+                    let offset = U32::read($machine.element_ref(i.vs2(), sew, j)).u64();
+                    let data = $machine.element_ref(vd, $size << 3, j as usize).to_vec();
+                    $machine.memory_mut().store_bytes(addr + offset, &data)?;
+                }
+                64 => {
+                    let offset = U64::read($machine.element_ref(i.vs2(), sew, j)).u64();
+                    let data = $machine.element_ref(vd, $size << 3, j as usize).to_vec();
+                    $machine.memory_mut().store_bytes(addr + offset, &data)?;
+                }
+                128 => {
+                    let offset = U128::read($machine.element_ref(i.vs2(), sew, j)).u64();
+                    let data = $machine.element_ref(vd, $size << 3, j as usize).to_vec();
+                    $machine.memory_mut().store_bytes(addr + offset, &data)?;
+                }
+                256 => {
+                    let offset = U256::read($machine.element_ref(i.vs2(), sew, j)).u64();
+                    let data = $machine.element_ref(vd, $size << 3, j as usize).to_vec();
+                    $machine.memory_mut().store_bytes(addr + offset, &data)?;
+                }
+                512 => {
+                    let offset = U512::read($machine.element_ref(i.vs2(), sew, j)).u64();
+                    let data = $machine.element_ref(vd, $size << 3, j as usize).to_vec();
+                    $machine.memory_mut().store_bytes(addr + offset, &data)?;
+                }
+                1024 => {
+                    let offset = U1024::read($machine.element_ref(i.vs2(), sew, j)).u64();
+                    let data = $machine.element_ref(vd, $size << 3, j as usize).to_vec();
+                    $machine.memory_mut().store_bytes(addr + offset, &data)?;
+                }
+                _ => {
+                    return Err(Error::InvalidSew(format!(
+                        "The SEW can only be 8, 16, ..., 512, 1024. It's found as {} in sd_indexed",
+                        sew
+                    )));
+                }
+            }
         }
     };
 }
@@ -3652,6 +3792,102 @@ pub fn execute_instruction<Mac: Machine>(
         }
         insts::OP_VSSE1024_V => {
             sd!(inst, machine, machine.vl(), 1, 128, 1);
+        }
+        insts::OP_VLUXEI8_V => {
+            ld_indexed!(inst, machine, 1);
+        }
+        insts::OP_VLUXEI16_V => {
+            ld_indexed!(inst, machine, 2);
+        }
+        insts::OP_VLUXEI32_V => {
+            ld_indexed!(inst, machine, 4);
+        }
+        insts::OP_VLUXEI64_V => {
+            ld_indexed!(inst, machine, 8);
+        }
+        insts::OP_VLUXEI128_V => {
+            ld_indexed!(inst, machine, 16);
+        }
+        insts::OP_VLUXEI256_V => {
+            ld_indexed!(inst, machine, 32);
+        }
+        insts::OP_VLUXEI512_V => {
+            ld_indexed!(inst, machine, 64);
+        }
+        insts::OP_VLUXEI1024_V => {
+            ld_indexed!(inst, machine, 128);
+        }
+        insts::OP_VLOXEI8_V => {
+            ld_indexed!(inst, machine, 1);
+        }
+        insts::OP_VLOXEI16_V => {
+            ld_indexed!(inst, machine, 2);
+        }
+        insts::OP_VLOXEI32_V => {
+            ld_indexed!(inst, machine, 4);
+        }
+        insts::OP_VLOXEI64_V => {
+            ld_indexed!(inst, machine, 8);
+        }
+        insts::OP_VLOXEI128_V => {
+            ld_indexed!(inst, machine, 16);
+        }
+        insts::OP_VLOXEI256_V => {
+            ld_indexed!(inst, machine, 32);
+        }
+        insts::OP_VLOXEI512_V => {
+            ld_indexed!(inst, machine, 64);
+        }
+        insts::OP_VLOXEI1024_V => {
+            ld_indexed!(inst, machine, 128);
+        }
+        insts::OP_VSUXEI8_V => {
+            sd_indexed!(inst, machine, 1);
+        }
+        insts::OP_VSUXEI16_V => {
+            sd_indexed!(inst, machine, 2);
+        }
+        insts::OP_VSUXEI32_V => {
+            sd_indexed!(inst, machine, 4);
+        }
+        insts::OP_VSUXEI64_V => {
+            sd_indexed!(inst, machine, 8);
+        }
+        insts::OP_VSUXEI128_V => {
+            sd_indexed!(inst, machine, 16);
+        }
+        insts::OP_VSUXEI256_V => {
+            sd_indexed!(inst, machine, 32);
+        }
+        insts::OP_VSUXEI512_V => {
+            sd_indexed!(inst, machine, 64);
+        }
+        insts::OP_VSUXEI1024_V => {
+            sd_indexed!(inst, machine, 128);
+        }
+        insts::OP_VSOXEI8_V => {
+            sd_indexed!(inst, machine, 1);
+        }
+        insts::OP_VSOXEI16_V => {
+            sd_indexed!(inst, machine, 2);
+        }
+        insts::OP_VSOXEI32_V => {
+            sd_indexed!(inst, machine, 4);
+        }
+        insts::OP_VSOXEI64_V => {
+            sd_indexed!(inst, machine, 8);
+        }
+        insts::OP_VSOXEI128_V => {
+            sd_indexed!(inst, machine, 16);
+        }
+        insts::OP_VSOXEI256_V => {
+            sd_indexed!(inst, machine, 32);
+        }
+        insts::OP_VSOXEI512_V => {
+            sd_indexed!(inst, machine, 64);
+        }
+        insts::OP_VSOXEI1024_V => {
+            sd_indexed!(inst, machine, 128);
         }
         insts::OP_VFIRST_M => {
             let i = Rtype(inst);

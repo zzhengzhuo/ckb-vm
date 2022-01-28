@@ -353,12 +353,44 @@ pub const OP_VSSE128_V: InstructionOpcode = 0xb9f0;
 pub const OP_VSSE256_V: InstructionOpcode = 0xbaf0;
 pub const OP_VSSE512_V: InstructionOpcode = 0xbbf0;
 pub const OP_VSSE1024_V: InstructionOpcode = 0xbcf0;
+pub const OP_VLUXEI8_V: InstructionOpcode = 0xbdf0;
+pub const OP_VLUXEI16_V: InstructionOpcode = 0xbef0;
+pub const OP_VLUXEI32_V: InstructionOpcode = 0xbff0;
+pub const OP_VLUXEI64_V: InstructionOpcode = 0xc0f0;
+pub const OP_VLUXEI128_V: InstructionOpcode = 0xc1f0;
+pub const OP_VLUXEI256_V: InstructionOpcode = 0xc2f0;
+pub const OP_VLUXEI512_V: InstructionOpcode = 0xc3f0;
+pub const OP_VLUXEI1024_V: InstructionOpcode = 0xc4f0;
+pub const OP_VLOXEI8_V: InstructionOpcode = 0xc5f0;
+pub const OP_VLOXEI16_V: InstructionOpcode = 0xc6f0;
+pub const OP_VLOXEI32_V: InstructionOpcode = 0xc7f0;
+pub const OP_VLOXEI64_V: InstructionOpcode = 0xc8f0;
+pub const OP_VLOXEI128_V: InstructionOpcode = 0xc9f0;
+pub const OP_VLOXEI256_V: InstructionOpcode = 0xcaf0;
+pub const OP_VLOXEI512_V: InstructionOpcode = 0xcbf0;
+pub const OP_VLOXEI1024_V: InstructionOpcode = 0xccf0;
+pub const OP_VSUXEI8_V: InstructionOpcode = 0xcdf0;
+pub const OP_VSUXEI16_V: InstructionOpcode = 0xcef0;
+pub const OP_VSUXEI32_V: InstructionOpcode = 0xcff0;
+pub const OP_VSUXEI64_V: InstructionOpcode = 0xd0f0;
+pub const OP_VSUXEI128_V: InstructionOpcode = 0xd1f0;
+pub const OP_VSUXEI256_V: InstructionOpcode = 0xd2f0;
+pub const OP_VSUXEI512_V: InstructionOpcode = 0xd3f0;
+pub const OP_VSUXEI1024_V: InstructionOpcode = 0xd4f0;
+pub const OP_VSOXEI8_V: InstructionOpcode = 0xd5f0;
+pub const OP_VSOXEI16_V: InstructionOpcode = 0xd6f0;
+pub const OP_VSOXEI32_V: InstructionOpcode = 0xd7f0;
+pub const OP_VSOXEI64_V: InstructionOpcode = 0xd8f0;
+pub const OP_VSOXEI128_V: InstructionOpcode = 0xd9f0;
+pub const OP_VSOXEI256_V: InstructionOpcode = 0xdaf0;
+pub const OP_VSOXEI512_V: InstructionOpcode = 0xdbf0;
+pub const OP_VSOXEI1024_V: InstructionOpcode = 0xdcf0;
 
 pub const MINIMAL_LEVEL1_OPCODE: InstructionOpcode = OP_UNLOADED;
 pub const MAXIMUM_LEVEL1_OPCODE: InstructionOpcode = OP_CUSTOM_TRACE_END;
 pub const LEVEL2_V_OPCODE: InstructionOpcode = 0xf0;
 pub const MINIMAL_LEVEL2_OPCODE: InstructionOpcode = 0x00;
-pub const MAXIMUM_LEVEL2_OPCODE: InstructionOpcode = 0xbc;
+pub const MAXIMUM_LEVEL2_OPCODE: InstructionOpcode = 0xdc;
 
 pub const INSTRUCTION_OPCODE_NAMES_LEVEL1: [&str; MAXIMUM_LEVEL1_OPCODE as usize + 1] = [
     "UNLOADED",
@@ -676,6 +708,38 @@ pub const INSTRUCTION_OPCODE_NAMES_LEVEL2: [&str;
     "VSSE256_V",
     "VSSE512_V",
     "VSSE1024_V",
+    "VLUXEI8_V",
+    "VLUXEI16_V",
+    "VLUXEI32_V",
+    "VLUXEI64_V",
+    "VLUXEI128_V",
+    "VLUXEI256_V",
+    "VLUXEI512_V",
+    "VLUXEI1024_V",
+    "VLOXEI8_V",
+    "VLOXEI16_V",
+    "VLOXEI32_V",
+    "VLOXEI64_V",
+    "VLOXEI128_V",
+    "VLOXEI256_V",
+    "VLOXEI512_V",
+    "VLOXEI1024_V",
+    "VSUXEI8_V",
+    "VSUXEI16_V",
+    "VSUXEI32_V",
+    "VSUXEI64_V",
+    "VSUXEI128_V",
+    "VSUXEI256_V",
+    "VSUXEI512_V",
+    "VSUXEI1024_V",
+    "VSOXEI8_V",
+    "VSOXEI16_V",
+    "VSOXEI32_V",
+    "VSOXEI64_V",
+    "VSOXEI128_V",
+    "VSOXEI256_V",
+    "VSOXEI512_V",
+    "VSOXEI1024_V",
 ];
 
 pub fn instruction_opcode_name(i: InstructionOpcode) -> &'static str {
