@@ -220,6 +220,33 @@ fn test_widening_mul_s() {
 }
 
 #[test]
+fn test_average_add_s() {
+    let case_list = [
+        [U32(0xfffffff6), U32(0x00000008), U32(0xffffffff)],
+        [U32(0xffffffff), U32(0xffffffff), U32(0xffffffff)],
+    ];
+    for case in &case_list {
+        let lhs = case[0];
+        let rhs = case[1];
+        let e = case[2];
+        let r = lhs.average_add_s(rhs);
+        assert_eq!(e, r);
+    }
+}
+
+#[test]
+fn test_average_sub() {
+    let case_list = [[U32(0x00000008), U32(0x00000000), U32(0x00000004)]];
+    for case in &case_list {
+        let lhs = case[0];
+        let rhs = case[1];
+        let e = case[2];
+        let r = lhs.average_sub(rhs);
+        assert_eq!(e, r);
+    }
+}
+
+#[test]
 fn test_bug_fix_0() {
     let a = U256 {
         lo: U128(0x00000000000022330000000000001122),

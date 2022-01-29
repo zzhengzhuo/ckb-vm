@@ -164,16 +164,24 @@ pub trait Element:
     fn saturating_sub_s(self, other: Self) -> (Self, bool);
 
     /// Averaging adds of unsigned integers.
-    fn average_add(self, other: Self) -> Self;
+    fn average_add(self, other: Self) -> Self {
+        (self & other).wrapping_add((self ^ other) >> 1)
+    }
 
     /// Averaging adds of signed integers.
-    fn average_add_s(self, other: Self) -> Self;
+    fn average_add_s(self, other: Self) -> Self {
+        (self & other).wrapping_add((self ^ other).wrapping_sra(1))
+    }
 
     /// Averaging subtract of unsigned integers.
-    fn average_sub(self, other: Self) -> Self;
+    fn average_sub(self, other: Self) -> Self {
+        self.wrapping_sub(other) >> 1
+    }
 
     /// Averaging subtract of signed integers.
-    fn average_sub_s(self, other: Self) -> Self;
+    fn average_sub_s(self, other: Self) -> Self {
+        self.wrapping_sub(other).wrapping_sra(1)
+    }
 
     /// Wrapping (modular) addition. Computes self + other, wrapping around at the boundary of the type.
     fn wrapping_add(self, other: Self) -> Self;
@@ -888,22 +896,6 @@ macro_rules! uint_wrap_impl {
                 (r, false)
             }
 
-            fn average_add(self, other: Self) -> Self {
-                (self & other).wrapping_add((self ^ other) >> 1)
-            }
-
-            fn average_add_s(self, other: Self) -> Self {
-                (self & other).wrapping_add((self ^ other) >> 1)
-            }
-
-            fn average_sub(self, other: Self) -> Self {
-                self.average_add(-other)
-            }
-
-            fn average_sub_s(self, other: Self) -> Self {
-                self.average_add_s(-other)
-            }
-
             fn wrapping_add(self, other: Self) -> Self {
                 Self(self.0.wrapping_add(other.0))
             }
@@ -1469,22 +1461,6 @@ macro_rules! uint_impl {
                     }
                 }
                 (r, false)
-            }
-
-            fn average_add(self, other: Self) -> Self {
-                (self & other).wrapping_add((self ^ other) >> 1)
-            }
-
-            fn average_add_s(self, other: Self) -> Self {
-                (self & other).wrapping_add((self ^ other) >> 1)
-            }
-
-            fn average_sub(self, other: Self) -> Self {
-                self.average_add(-other)
-            }
-
-            fn average_sub_s(self, other: Self) -> Self {
-                self.average_add_s(-other)
             }
 
             fn wrapping_add(self, other: Self) -> Self {
