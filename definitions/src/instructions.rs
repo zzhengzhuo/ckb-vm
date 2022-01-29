@@ -385,12 +385,32 @@ pub const OP_VSOXEI128_V: InstructionOpcode = 0xd9f0;
 pub const OP_VSOXEI256_V: InstructionOpcode = 0xdaf0;
 pub const OP_VSOXEI512_V: InstructionOpcode = 0xdbf0;
 pub const OP_VSOXEI1024_V: InstructionOpcode = 0xdcf0;
+pub const OP_VL1RE8_V: InstructionOpcode = 0xddf0;
+pub const OP_VL1RE16_V: InstructionOpcode = 0xdef0;
+pub const OP_VL1RE32_V: InstructionOpcode = 0xdff0;
+pub const OP_VL1RE64_V: InstructionOpcode = 0xe0f0;
+pub const OP_VL2RE8_V: InstructionOpcode = 0xe1f0;
+pub const OP_VL2RE16_V: InstructionOpcode = 0xe2f0;
+pub const OP_VL2RE32_V: InstructionOpcode = 0xe3f0;
+pub const OP_VL2RE64_V: InstructionOpcode = 0xe4f0;
+pub const OP_VL4RE8_V: InstructionOpcode = 0xe5f0;
+pub const OP_VL4RE16_V: InstructionOpcode = 0xe6f0;
+pub const OP_VL4RE32_V: InstructionOpcode = 0xe7f0;
+pub const OP_VL4RE64_V: InstructionOpcode = 0xe8f0;
+pub const OP_VL8RE8_V: InstructionOpcode = 0xe9f0;
+pub const OP_VL8RE16_V: InstructionOpcode = 0xeaf0;
+pub const OP_VL8RE32_V: InstructionOpcode = 0xebf0;
+pub const OP_VL8RE64_V: InstructionOpcode = 0xecf0;
+pub const OP_VS1R_V: InstructionOpcode = 0xedf0;
+pub const OP_VS2R_V: InstructionOpcode = 0xeef0;
+pub const OP_VS4R_V: InstructionOpcode = 0xeff0;
+pub const OP_VS8R_V: InstructionOpcode = 0xf0f0;
 
 pub const MINIMAL_LEVEL1_OPCODE: InstructionOpcode = OP_UNLOADED;
 pub const MAXIMUM_LEVEL1_OPCODE: InstructionOpcode = OP_CUSTOM_TRACE_END;
 pub const LEVEL2_V_OPCODE: InstructionOpcode = 0xf0;
 pub const MINIMAL_LEVEL2_OPCODE: InstructionOpcode = 0x00;
-pub const MAXIMUM_LEVEL2_OPCODE: InstructionOpcode = 0xdc;
+pub const MAXIMUM_LEVEL2_OPCODE: InstructionOpcode = 0xf0;
 
 pub const INSTRUCTION_OPCODE_NAMES_LEVEL1: [&str; MAXIMUM_LEVEL1_OPCODE as usize + 1] = [
     "UNLOADED",
@@ -740,6 +760,26 @@ pub const INSTRUCTION_OPCODE_NAMES_LEVEL2: [&str;
     "VSOXEI256_V",
     "VSOXEI512_V",
     "VSOXEI1024_V",
+    "VL1RE8_V",
+    "VL1RE16_V",
+    "VL1RE32_V",
+    "VL1RE64_V",
+    "VL2RE8_V",
+    "VL2RE16_V",
+    "VL2RE32_V",
+    "VL2RE64_V",
+    "VL4RE8_V",
+    "VL4RE16_V",
+    "VL4RE32_V",
+    "VL4RE64_V",
+    "VL8RE8_V",
+    "VL8RE16_V",
+    "VL8RE32_V",
+    "VL8RE64_V",
+    "VS1R_V",
+    "VS2R_V",
+    "VS4R_V",
+    "VS8R_V",
 ];
 
 pub fn instruction_opcode_name(i: InstructionOpcode) -> &'static str {
