@@ -523,6 +523,26 @@ pub mod alu {
         let (_, r) = lhs.carrying_sub_s(rhs, borrow);
         r
     }
+
+    /// Integer multiply-add, overwrite addend
+    pub fn macc<T: Element>(lhs: T, rhs: T, r: T) -> T {
+        r + (rhs * lhs)
+    }
+
+    /// Integer multiply-sub, overwrite minuend
+    pub fn nmsac<T: Element>(lhs: T, rhs: T, r: T) -> T {
+        r - (rhs * lhs)
+    }
+
+    /// Integer multiply-add, overwrite multiplicand
+    pub fn madd<T: Element>(lhs: T, rhs: T, r: T) -> T {
+        lhs + (rhs * r)
+    }
+
+    /// Integer multiply-sub, overwrite multiplicand
+    pub fn nmsub<T: Element>(lhs: T, rhs: T, r: T) -> T {
+        lhs - (rhs * r)
+    }
 }
 
 macro_rules! uint_wrap_impl {

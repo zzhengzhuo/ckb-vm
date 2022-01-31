@@ -405,12 +405,20 @@ pub const OP_VS1R_V: InstructionOpcode = 0xedf0;
 pub const OP_VS2R_V: InstructionOpcode = 0xeef0;
 pub const OP_VS4R_V: InstructionOpcode = 0xeff0;
 pub const OP_VS8R_V: InstructionOpcode = 0xf0f0;
+pub const OP_VMACC_VV: InstructionOpcode = 0xf1f0;
+pub const OP_VMACC_VX: InstructionOpcode = 0xf2f0;
+pub const OP_VNMSAC_VV: InstructionOpcode = 0xf3f0;
+pub const OP_VNMSAC_VX: InstructionOpcode = 0xf4f0;
+pub const OP_VMADD_VV: InstructionOpcode = 0xf5f0;
+pub const OP_VMADD_VX: InstructionOpcode = 0xf6f0;
+pub const OP_VNMSUB_VV: InstructionOpcode = 0xf7f0;
+pub const OP_VNMSUB_VX: InstructionOpcode = 0xf8f0;
 
 pub const MINIMAL_LEVEL1_OPCODE: InstructionOpcode = OP_UNLOADED;
 pub const MAXIMUM_LEVEL1_OPCODE: InstructionOpcode = OP_CUSTOM_TRACE_END;
 pub const LEVEL2_V_OPCODE: InstructionOpcode = 0xf0;
 pub const MINIMAL_LEVEL2_OPCODE: InstructionOpcode = 0x00;
-pub const MAXIMUM_LEVEL2_OPCODE: InstructionOpcode = 0xf0;
+pub const MAXIMUM_LEVEL2_OPCODE: InstructionOpcode = 0xf8;
 
 pub const INSTRUCTION_OPCODE_NAMES_LEVEL1: [&str; MAXIMUM_LEVEL1_OPCODE as usize + 1] = [
     "UNLOADED",
@@ -780,11 +788,19 @@ pub const INSTRUCTION_OPCODE_NAMES_LEVEL2: [&str;
     "VS2R_V",
     "VS4R_V",
     "VS8R_V",
+    "VMACC_VV",
+    "VMACC_VX",
+    "VNMSAC_VV",
+    "VNMSAC_VX",
+    "VMADD_VV",
+    "VMADD_VX",
+    "VNMSUB_VV",
+    "VNMSUB_VX",
 ];
 
 pub fn instruction_opcode_name(i: InstructionOpcode) -> &'static str {
     if i >= 0xf0 {
-        INSTRUCTION_OPCODE_NAMES_LEVEL2[i as usize >> 8]
+        INSTRUCTION_OPCODE_NAMES_LEVEL2[(((i & 0xf) << 8) | (i >> 8)) as usize]
     } else {
         INSTRUCTION_OPCODE_NAMES_LEVEL1[i as usize]
     }

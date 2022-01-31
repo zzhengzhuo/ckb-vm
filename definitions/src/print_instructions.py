@@ -240,7 +240,19 @@ insts = [
     "VS2R_V",
     "VS4R_V",
     "VS8R_V",
+    "VMACC_VV",
+    "VMACC_VX",
+    "VNMSAC_VV",
+    "VNMSAC_VX",
+    "VMADD_VV",
+    "VMADD_VX",
+    "VNMSUB_VV",
+    "VNMSUB_VX",
 ]
 
 for (i, e) in enumerate(insts):
-    print(f'pub const OP_{e}: InstructionOpcode = 0x{i:02x}f0;')
+    if i >= 256:
+        i = i - 256
+        print(f'pub const OP_{e}: InstructionOpcode = 0x{i:02x}f1;')
+    else:
+        print(f'pub const OP_{e}: InstructionOpcode = 0x{i:02x}f0;')
