@@ -270,6 +270,7 @@ fn test_average_sub_s() {
         asub(0x80000000, 0x7fffffff),
         asub(0x00000000, 0xffffffff),
         asub(0xffffffff, 0x80000000),
+        asub(0x7fffffff, 0x80000000),
     ];
     for case in &case_list {
         let lhs = case[0];

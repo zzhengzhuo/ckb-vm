@@ -185,12 +185,11 @@ pub trait Element:
 
     /// Averaging subtract of signed integers.
     fn average_sub_s(self, other: Self) -> Self {
-        let (lo, borrow) = self.overflowing_sub_s(other);
-        if borrow {
-            (lo >> 1) | (Self::ONE << (Self::BITS - 1))
-        } else {
-            lo.wrapping_sra(1)
-        }
+        let h0 = if !self.is_negative() { Self::MIN } else { Self::MAX };
+        let h1 = if !other.is_negative() { Self::MIN } else { Self::MAX };
+        let (lo, borrow) = self.overflowing_sub(other);
+        let hi = h0.wrapping_sub(h1).wrapping_sub(Self::from(borrow));
+        lo.wrapping_shr(1) | hi.wrapping_shl(1).wrapping_shl(Self::BITS - 2)
     }
 
     /// Wrapping (modular) addition. Computes self + other, wrapping around at the boundary of the type.
