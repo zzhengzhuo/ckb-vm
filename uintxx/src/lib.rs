@@ -1778,7 +1778,7 @@ macro_rules! uint_impl_from_i {
             fn from(small: $from) -> Self {
                 Self {
                     lo: <$half>::from(small),
-                    hi: if small > 0 { <$half>::MIN } else { <$half>::MAX },
+                    hi: if small >= 0 { <$half>::MIN } else { <$half>::MAX },
                 }
             }
         }
