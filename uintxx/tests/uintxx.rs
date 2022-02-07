@@ -236,12 +236,46 @@ fn test_average_add_s() {
 
 #[test]
 fn test_average_sub() {
-    let case_list = [[U32(0x00000008), U32(0x00000000), U32(0x00000004)]];
+    fn asub(a: u32, b: u32) -> [U32; 3] {
+        let c = (a as u64).wrapping_sub(b as u64).wrapping_shr(1) as u32;
+        [U32(a), U32(b), U32(c)]
+    }
+    let case_list = [
+        asub(0x00000008, 0x00000000),
+        asub(0x00000000, 0x00000008),
+        asub(0x80000000, 0x80000000),
+        asub(0x80000000, 0x7fffffff),
+        asub(0x00000000, 0xffffffff),
+        asub(0xffffffff, 0x80000000),
+    ];
     for case in &case_list {
         let lhs = case[0];
         let rhs = case[1];
         let e = case[2];
         let r = lhs.average_sub(rhs);
+        assert_eq!(e, r);
+    }
+}
+
+#[test]
+fn test_average_sub_s() {
+    fn asub(a: u32, b: u32) -> [U32; 3] {
+        let c = (a as i32 as i64).wrapping_sub(b as i32 as i64).wrapping_shr(1) as u64 as u32;
+        [U32(a), U32(b), U32(c)]
+    }
+    let case_list = [
+        asub(0x00000008, 0x00000000),
+        asub(0x00000000, 0x00000008),
+        asub(0x80000000, 0x80000000),
+        asub(0x80000000, 0x7fffffff),
+        asub(0x00000000, 0xffffffff),
+        asub(0xffffffff, 0x80000000),
+    ];
+    for case in &case_list {
+        let lhs = case[0];
+        let rhs = case[1];
+        let e = case[2];
+        let r = lhs.average_sub_s(rhs);
         assert_eq!(e, r);
     }
 }

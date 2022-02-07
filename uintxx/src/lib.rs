@@ -13,7 +13,7 @@ pub trait Element:
     + std::ops::BitXor<Output = Self>
     + std::ops::BitXorAssign
     + std::ops::Not
-    + std::ops::Neg
+    + std::ops::Neg<Output = Self>
     + std::cmp::PartialOrd
     + std::cmp::Ord
     + std::ops::Add<Output = Self>
@@ -175,12 +175,22 @@ pub trait Element:
 
     /// Averaging subtract of unsigned integers.
     fn average_sub(self, other: Self) -> Self {
-        self.wrapping_sub(other) >> 1
+        let (lo, borrow) = self.overflowing_sub(other);
+        if borrow {
+            (lo >> 1) | (Self::ONE << (Self::BITS - 1))
+        } else {
+            lo >> 1
+        }
     }
 
     /// Averaging subtract of signed integers.
     fn average_sub_s(self, other: Self) -> Self {
-        self.wrapping_sub(other).wrapping_sra(1)
+        let (lo, borrow) = self.overflowing_sub_s(other);
+        if borrow {
+            (lo >> 1) | (Self::ONE << (Self::BITS - 1))
+        } else {
+            lo.wrapping_sra(1)
+        }
     }
 
     /// Wrapping (modular) addition. Computes self + other, wrapping around at the boundary of the type.
