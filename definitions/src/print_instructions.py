@@ -248,6 +248,12 @@ insts = [
     "VMADD_VX",
     "VNMSUB_VV",
     "VNMSUB_VX",
+    "VSSRL_VV",
+    "VSSRL_VX",
+    "VSSRL_VI",
+    "VSSRA_VV",
+    "VSSRA_VX",
+    "VSSRA_VI",
 ]
 
 for (i, e) in enumerate(insts):

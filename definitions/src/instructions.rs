@@ -413,12 +413,18 @@ pub const OP_VMADD_VV: InstructionOpcode = 0xf5f0;
 pub const OP_VMADD_VX: InstructionOpcode = 0xf6f0;
 pub const OP_VNMSUB_VV: InstructionOpcode = 0xf7f0;
 pub const OP_VNMSUB_VX: InstructionOpcode = 0xf8f0;
+pub const OP_VSSRL_VV: InstructionOpcode = 0xf9f0;
+pub const OP_VSSRL_VX: InstructionOpcode = 0xfaf0;
+pub const OP_VSSRL_VI: InstructionOpcode = 0xfbf0;
+pub const OP_VSSRA_VV: InstructionOpcode = 0xfcf0;
+pub const OP_VSSRA_VX: InstructionOpcode = 0xfdf0;
+pub const OP_VSSRA_VI: InstructionOpcode = 0xfef0;
 
 pub const MINIMAL_LEVEL1_OPCODE: InstructionOpcode = OP_UNLOADED;
 pub const MAXIMUM_LEVEL1_OPCODE: InstructionOpcode = OP_CUSTOM_TRACE_END;
 pub const LEVEL2_V_OPCODE: InstructionOpcode = 0xf0;
 pub const MINIMAL_LEVEL2_OPCODE: InstructionOpcode = 0x00;
-pub const MAXIMUM_LEVEL2_OPCODE: InstructionOpcode = 0xf8;
+pub const MAXIMUM_LEVEL2_OPCODE: InstructionOpcode = 0xfe;
 
 pub const INSTRUCTION_OPCODE_NAMES_LEVEL1: [&str; MAXIMUM_LEVEL1_OPCODE as usize + 1] = [
     "UNLOADED",
@@ -796,6 +802,12 @@ pub const INSTRUCTION_OPCODE_NAMES_LEVEL2: [&str;
     "VMADD_VX",
     "VNMSUB_VV",
     "VNMSUB_VX",
+    "VSSRL_VV",
+    "VSSRL_VX",
+    "VSSRL_VI",
+    "VSSRA_VV",
+    "VSSRA_VX",
+    "VSSRA_VI",
 ];
 
 pub fn instruction_opcode_name(i: InstructionOpcode) -> &'static str {

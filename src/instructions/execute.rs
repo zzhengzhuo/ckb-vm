@@ -4195,6 +4195,24 @@ pub fn execute_instruction<Mac: Machine>(
         insts::OP_VNMSUB_VX => {
             v_vx_loop_destructive_s!(inst, machine, alu::nmsub);
         }
+        insts::OP_VSSRL_VV => {
+            v_vv_loop_u!(inst, machine, Element::wrapping_shr_e);
+        }
+        insts::OP_VSSRL_VX => {
+            v_vx_loop_u!(inst, machine, Element::wrapping_shr_e);
+        }
+        insts::OP_VSSRL_VI => {
+            v_vi_loop_u!(inst, machine, Element::wrapping_shr_e);
+        }
+        insts::OP_VSSRA_VV => {
+            v_vv_loop_u!(inst, machine, Element::wrapping_sra_e);
+        }
+        insts::OP_VSSRA_VX => {
+            v_vx_loop_u!(inst, machine, Element::wrapping_sra_e);
+        }
+        insts::OP_VSSRA_VI => {
+            v_vi_loop_u!(inst, machine, Element::wrapping_sra_e);
+        }
         insts::OP_VFIRST_M => {
             let i = Rtype(inst);
             let m = U2048::read(machine.element_ref(i.rs2(), VLEN as u64, 0));
