@@ -428,12 +428,15 @@ pub const OP_VWMACC_VX: InstructionOpcode = 0x04f1;
 pub const OP_VWMACCSU_VV: InstructionOpcode = 0x05f1;
 pub const OP_VWMACCSU_VX: InstructionOpcode = 0x06f1;
 pub const OP_VWMACCUS_VX: InstructionOpcode = 0x07f1;
+pub const OP_VMERGE_VVM: InstructionOpcode = 0x08f1;
+pub const OP_VMERGE_VXM: InstructionOpcode = 0x09f1;
+pub const OP_VMERGE_VIM: InstructionOpcode = 0x0af1;
 
 pub const MINIMAL_LEVEL1_OPCODE: InstructionOpcode = OP_UNLOADED;
 pub const MAXIMUM_LEVEL1_OPCODE: InstructionOpcode = OP_CUSTOM_TRACE_END;
 pub const LEVEL2_V_OPCODE: InstructionOpcode = 0xf0;
 pub const MINIMAL_LEVEL2_OPCODE: InstructionOpcode = 0x00;
-pub const MAXIMUM_LEVEL2_OPCODE: InstructionOpcode = 0x107;
+pub const MAXIMUM_LEVEL2_OPCODE: InstructionOpcode = 0x10a;
 
 pub const INSTRUCTION_OPCODE_NAMES_LEVEL1: [&str; MAXIMUM_LEVEL1_OPCODE as usize + 1] = [
     "UNLOADED",
@@ -826,6 +829,9 @@ pub const INSTRUCTION_OPCODE_NAMES_LEVEL2: [&str;
     "VWMACCSU_VV",
     "VWMACCSU_VX",
     "VWMACCUS_VX",
+    "VMERGE_VVM",
+    "VMERGE_VXM",
+    "VMERGE_VIM",
 ];
 
 pub fn instruction_opcode_name(i: InstructionOpcode) -> &'static str {

@@ -584,6 +584,15 @@ pub mod alu {
         let hi = hi.wrapping_add(T::from(carry));
         (lo, hi)
     }
+
+    /// The vector integer merge instructions combine two source operands based on a mask
+    pub fn merge<T: Element>(lhs: T, rhs: T, mask: bool) -> T {
+        if mask {
+            rhs
+        } else {
+            lhs
+        }
+    }
 }
 
 macro_rules! uint_wrap_impl {

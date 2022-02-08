@@ -263,6 +263,9 @@ insts = [
     "VWMACCSU_VV",
     "VWMACCSU_VX",
     "VWMACCUS_VX",
+    "VMERGE_VVM",
+    "VMERGE_VXM",
+    "VMERGE_VIM",
 ]
 
 for (i, e) in enumerate(insts):

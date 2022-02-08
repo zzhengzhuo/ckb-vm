@@ -4454,6 +4454,15 @@ pub fn execute_instruction<Mac: Machine>(
         insts::OP_VWMACCUS_VX => {
             w_vv_loop_destructive_s!(inst, machine, alu::wmaccus);
         }
+        insts::OP_VMERGE_VVM => {
+            v_vvm_loop_s!(inst, machine, alu::merge);
+        }
+        insts::OP_VMERGE_VXM => {
+            v_vxm_loop_s!(inst, machine, alu::merge);
+        }
+        insts::OP_VMERGE_VIM => {
+            v_vim_loop_s!(inst, machine, alu::merge);
+        }
         insts::OP_VFIRST_M => {
             let i = Rtype(inst);
             let m = U2048::read(machine.element_ref(i.rs2(), VLEN as u64, 0));
