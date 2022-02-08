@@ -4213,6 +4213,14 @@ pub fn execute_instruction<Mac: Machine>(
         insts::OP_VSSRA_VI => {
             v_vi_loop_u!(inst, machine, Element::wrapping_sra_e);
         }
+        insts::OP_VSMUL_VV => {
+            // TODO
+            return Err(Error::InvalidOp(op));
+        }
+        insts::OP_VSMUL_VX => {
+            // TODO
+            return Err(Error::InvalidOp(op));
+        }
         insts::OP_VFIRST_M => {
             let i = Rtype(inst);
             let m = U2048::read(machine.element_ref(i.rs2(), VLEN as u64, 0));
