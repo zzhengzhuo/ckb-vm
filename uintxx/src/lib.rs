@@ -552,6 +552,38 @@ pub mod alu {
     pub fn nmsub<T: Element>(lhs: T, rhs: T, r: T) -> T {
         lhs - (rhs * r)
     }
+
+    /// Widening unsigned-integer multiply-add, overwrite addend
+    pub fn wmaccu<T: Element>(lhs: T, rhs: T, r: T) -> (T, T) {
+        let (lo, hi) = lhs.widening_mul(rhs);
+        let (lo, carry) = lo.overflowing_add(r);
+        let hi = hi.wrapping_add(T::from(carry));
+        (lo, hi)
+    }
+
+    /// Widening signed-integer multiply-add, overwrite addend
+    pub fn wmacc<T: Element>(lhs: T, rhs: T, r: T) -> (T, T) {
+        let (lo, hi) = lhs.widening_mul_s(rhs);
+        let (lo, carry) = lo.overflowing_add(r);
+        let hi = hi.wrapping_add(T::from(carry));
+        (lo, hi)
+    }
+
+    /// Widening signed-unsigned-integer multiply-add, overwrite addend
+    pub fn wmaccsu<T: Element>(lhs: T, rhs: T, r: T) -> (T, T) {
+        let (lo, hi) = lhs.widening_mul_su(rhs);
+        let (lo, carry) = lo.overflowing_add(r);
+        let hi = hi.wrapping_add(T::from(carry));
+        (lo, hi)
+    }
+
+    /// Widening unsigned-signed-integer multiply-add, overwrite addend
+    pub fn wmaccus<T: Element>(lhs: T, rhs: T, r: T) -> (T, T) {
+        let (lo, hi) = rhs.widening_mul_su(lhs);
+        let (lo, carry) = lo.overflowing_add(r);
+        let hi = hi.wrapping_add(T::from(carry));
+        (lo, hi)
+    }
 }
 
 macro_rules! uint_wrap_impl {
