@@ -437,12 +437,41 @@ pub const OP_VNCLIPU_WI: InstructionOpcode = 0x0df1;
 pub const OP_VNCLIP_WV: InstructionOpcode = 0x0ef1;
 pub const OP_VNCLIP_WX: InstructionOpcode = 0x0ff1;
 pub const OP_VNCLIP_WI: InstructionOpcode = 0x10f1;
+pub const OP_VREDSUM_VS: InstructionOpcode = 0x11f1;
+pub const OP_VREDAND_VS: InstructionOpcode = 0x12f1;
+pub const OP_VREDOR_VS: InstructionOpcode = 0x13f1;
+pub const OP_VREDXOR_VS: InstructionOpcode = 0x14f1;
+pub const OP_VREDMINU_VS: InstructionOpcode = 0x15f1;
+pub const OP_VREDMIN_VS: InstructionOpcode = 0x16f1;
+pub const OP_VREDMAXU_VS: InstructionOpcode = 0x17f1;
+pub const OP_VREDMAX_VS: InstructionOpcode = 0x18f1;
+pub const OP_VWREDSUMU_VS: InstructionOpcode = 0x19f1;
+pub const OP_VWREDSUM_VS: InstructionOpcode = 0x1af1;
+pub const OP_VCPOP: InstructionOpcode = 0x1bf1;
+pub const OP_VMSBF_M: InstructionOpcode = 0x1cf1;
+pub const OP_VMSOF_M: InstructionOpcode = 0x1df1;
+pub const OP_VMSIF_M: InstructionOpcode = 0x1ef1;
+pub const OP_VIOTA_M: InstructionOpcode = 0x1ff1;
+pub const OP_VID_V: InstructionOpcode = 0x20f1;
+pub const OP_VMV_X_S: InstructionOpcode = 0x21f1;
+pub const OP_VMV_S_X: InstructionOpcode = 0x22f1;
+pub const OP_VCOMPRESS_VM: InstructionOpcode = 0x23f1;
+pub const OP_VSLIDE1UP_VX: InstructionOpcode = 0x24f1;
+pub const OP_VSLIDEUP_VX: InstructionOpcode = 0x25f1;
+pub const OP_VSLIDEUP_VI: InstructionOpcode = 0x26f1;
+pub const OP_VSLIDE1DOWN_VX: InstructionOpcode = 0x27f1;
+pub const OP_VSLIDEDOWN_VX: InstructionOpcode = 0x28f1;
+pub const OP_VSLIDEDOWN_VI: InstructionOpcode = 0x29f1;
+pub const OP_VRGATHER_VX: InstructionOpcode = 0x2af1;
+pub const OP_VRGATHER_VV: InstructionOpcode = 0x2bf1;
+pub const OP_VRGATHEREI16_VV: InstructionOpcode = 0x2cf1;
+pub const OP_VRGATHER_VI: InstructionOpcode = 0x2df1;
 
 pub const MINIMAL_LEVEL1_OPCODE: InstructionOpcode = OP_UNLOADED;
 pub const MAXIMUM_LEVEL1_OPCODE: InstructionOpcode = OP_CUSTOM_TRACE_END;
 pub const LEVEL2_V_OPCODE: InstructionOpcode = 0xf0;
 pub const MINIMAL_LEVEL2_OPCODE: InstructionOpcode = 0x00;
-pub const MAXIMUM_LEVEL2_OPCODE: InstructionOpcode = 0x110;
+pub const MAXIMUM_LEVEL2_OPCODE: InstructionOpcode = 0x12d;
 
 pub const INSTRUCTION_OPCODE_NAMES_LEVEL1: [&str; MAXIMUM_LEVEL1_OPCODE as usize + 1] = [
     "UNLOADED",
@@ -844,6 +873,35 @@ pub const INSTRUCTION_OPCODE_NAMES_LEVEL2: [&str;
     "VNCLIP_WV",
     "VNCLIP_WX",
     "VNCLIP_WI",
+    "VREDSUM_VS",
+    "VREDAND_VS",
+    "VREDOR_VS",
+    "VREDXOR_VS",
+    "VREDMINU_VS",
+    "VREDMIN_VS",
+    "VREDMAXU_VS",
+    "VREDMAX_VS",
+    "VWREDSUMU_VS",
+    "VWREDSUM_VS",
+    "VCPOP",
+    "VMSBF_M",
+    "VMSOF_M",
+    "VMSIF_M",
+    "VIOTA_M",
+    "VID_V",
+    "VMV_X_S",
+    "VMV_S_X",
+    "VCOMPRESS_VM",
+    "VSLIDE1UP_VX",
+    "VSLIDEUP_VX",
+    "VSLIDEUP_VI",
+    "VSLIDE1DOWN_VX",
+    "VSLIDEDOWN_VX",
+    "VSLIDEDOWN_VI",
+    "VRGATHER_VX",
+    "VRGATHER_VV",
+    "VRGATHEREI16_VV",
+    "VRGATHER_VI",
 ];
 
 pub fn instruction_opcode_name(i: InstructionOpcode) -> &'static str {
