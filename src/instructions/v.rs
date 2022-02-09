@@ -604,6 +604,8 @@ pub fn factory<R: Register>(instruction_bits: u32, _: u32) -> Option<Instruction
                     x if x & 0b11111100000000000111000001111111 == 0b10101100000000000000000001010111 => Some(insts::OP_VSSRA_VV),
                     x if x & 0b11111100000000000111000001111111 == 0b10011100000000000000000001010111 => Some(insts::OP_VSMUL_VV),
                     x if x & 0b11111110000000000111000001111111 == 0b01011100000000000000000001010111 => Some(insts::OP_VMERGE_VVM),
+                    x if x & 0b11111100000000000111000001111111 == 0b10111000000000000000000001010111 => Some(insts::OP_VNCLIPU_WV),
+                    x if x & 0b11111100000000000111000001111111 == 0b10111100000000000000000001010111 => Some(insts::OP_VNCLIP_WV),
                     _ => None,
                 };
                 inst_opt.map(|inst| {
@@ -711,6 +713,8 @@ pub fn factory<R: Register>(instruction_bits: u32, _: u32) -> Option<Instruction
                     x if x & 0b11111100000000000111000001111111 == 0b10101000000000000011000001010111 => Some(insts::OP_VSSRL_VI),
                     x if x & 0b11111100000000000111000001111111 == 0b10101100000000000011000001010111 => Some(insts::OP_VSSRA_VI),
                     x if x & 0b11111110000000000111000001111111 == 0b01011100000000000011000001010111 => Some(insts::OP_VMERGE_VIM),
+                    x if x & 0b11111100000000000111000001111111 == 0b10111000000000000011000001010111 => Some(insts::OP_VNCLIPU_WI),
+                    x if x & 0b11111100000000000111000001111111 == 0b10111100000000000011000001010111 => Some(insts::OP_VNCLIP_WI),
                     _ => None,
                 };
                 inst_opt.map(|inst| {
@@ -765,6 +769,8 @@ pub fn factory<R: Register>(instruction_bits: u32, _: u32) -> Option<Instruction
                     x if x & 0b11111100000000000111000001111111 == 0b10101100000000000100000001010111 => Some(insts::OP_VSSRA_VX),
                     x if x & 0b11111100000000000111000001111111 == 0b10011100000000000100000001010111 => Some(insts::OP_VSMUL_VX),
                     x if x & 0b11111110000000000111000001111111 == 0b01011100000000000100000001010111 => Some(insts::OP_VMERGE_VXM),
+                    x if x & 0b11111100000000000111000001111111 == 0b10111000000000000100000001010111 => Some(insts::OP_VNCLIPU_WX),
+                    x if x & 0b11111100000000000111000001111111 == 0b10111100000000000100000001010111 => Some(insts::OP_VNCLIP_WX),
                     _ => None,
                 };
                 inst_opt.map(|inst| {

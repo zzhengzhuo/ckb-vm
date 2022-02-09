@@ -431,12 +431,18 @@ pub const OP_VWMACCUS_VX: InstructionOpcode = 0x07f1;
 pub const OP_VMERGE_VVM: InstructionOpcode = 0x08f1;
 pub const OP_VMERGE_VXM: InstructionOpcode = 0x09f1;
 pub const OP_VMERGE_VIM: InstructionOpcode = 0x0af1;
+pub const OP_VNCLIPU_WV: InstructionOpcode = 0x0bf1;
+pub const OP_VNCLIPU_WX: InstructionOpcode = 0x0cf1;
+pub const OP_VNCLIPU_WI: InstructionOpcode = 0x0df1;
+pub const OP_VNCLIP_WV: InstructionOpcode = 0x0ef1;
+pub const OP_VNCLIP_WX: InstructionOpcode = 0x0ff1;
+pub const OP_VNCLIP_WI: InstructionOpcode = 0x10f1;
 
 pub const MINIMAL_LEVEL1_OPCODE: InstructionOpcode = OP_UNLOADED;
 pub const MAXIMUM_LEVEL1_OPCODE: InstructionOpcode = OP_CUSTOM_TRACE_END;
 pub const LEVEL2_V_OPCODE: InstructionOpcode = 0xf0;
 pub const MINIMAL_LEVEL2_OPCODE: InstructionOpcode = 0x00;
-pub const MAXIMUM_LEVEL2_OPCODE: InstructionOpcode = 0x10a;
+pub const MAXIMUM_LEVEL2_OPCODE: InstructionOpcode = 0x110;
 
 pub const INSTRUCTION_OPCODE_NAMES_LEVEL1: [&str; MAXIMUM_LEVEL1_OPCODE as usize + 1] = [
     "UNLOADED",
@@ -832,6 +838,12 @@ pub const INSTRUCTION_OPCODE_NAMES_LEVEL2: [&str;
     "VMERGE_VVM",
     "VMERGE_VXM",
     "VMERGE_VIM",
+    "VNCLIPU_WV",
+    "VNCLIPU_WX",
+    "VNCLIPU_WI",
+    "VNCLIP_WV",
+    "VNCLIP_WX",
+    "VNCLIP_WI",
 ];
 
 pub fn instruction_opcode_name(i: InstructionOpcode) -> &'static str {

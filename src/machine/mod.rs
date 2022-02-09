@@ -17,7 +17,7 @@ use super::memory::{round_page_down, round_page_up, Memory, FLAG_DIRTY};
 use super::syscalls::Syscalls;
 use super::{
     registers::{A0, A7, REGISTER_ABI_NAMES, SP},
-    Error, DEFAULT_STACK_SIZE, ELEN, ISA_MOP, RISCV_GENERAL_REGISTER_NUMBER, RISCV_MAX_MEMORY,
+    Error, DEFAULT_STACK_SIZE, ISA_MOP, RISCV_GENERAL_REGISTER_NUMBER, RISCV_MAX_MEMORY,
     RISCV_PAGES, VLEN,
 };
 

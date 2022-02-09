@@ -266,6 +266,12 @@ insts = [
     "VMERGE_VVM",
     "VMERGE_VXM",
     "VMERGE_VIM",
+    "VNCLIPU_WV",
+    "VNCLIPU_WX",
+    "VNCLIPU_WI",
+    "VNCLIP_WV",
+    "VNCLIP_WX",
+    "VNCLIP_WI",
 ]
 
 for (i, e) in enumerate(insts):

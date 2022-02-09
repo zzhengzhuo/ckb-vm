@@ -4463,6 +4463,24 @@ pub fn execute_instruction<Mac: Machine>(
         insts::OP_VMERGE_VIM => {
             v_vim_loop_s!(inst, machine, alu::merge);
         }
+        insts::OP_VNCLIPU_WV => {
+            v_wv_loop_u!(inst, machine, Element::wrapping_shr_e);
+        }
+        insts::OP_VNCLIPU_WX => {
+            v_wx_loop_u!(inst, machine, Element::wrapping_shr_e);
+        }
+        insts::OP_VNCLIPU_WI => {
+            v_wi_loop_u!(inst, machine, Element::wrapping_shr_e);
+        }
+        insts::OP_VNCLIP_WV => {
+            v_wv_loop_u!(inst, machine, Element::wrapping_sra_e);
+        }
+        insts::OP_VNCLIP_WX => {
+            v_wx_loop_u!(inst, machine, Element::wrapping_sra_e);
+        }
+        insts::OP_VNCLIP_WI => {
+            v_wi_loop_u!(inst, machine, Element::wrapping_sra_e);
+        }
         insts::OP_VFIRST_M => {
             let i = Rtype(inst);
             let m = U2048::read(machine.element_ref(i.rs2(), VLEN as u64, 0));
