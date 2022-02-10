@@ -4782,12 +4782,83 @@ pub fn execute_instruction<Mac: Machine>(
         insts::OP_VWREDSUM_VS => {
             w_vs_loop_u!(inst, machine, Element::wrapping_add);
         }
-        insts::OP_VCPOP => {}
-        insts::OP_VMSBF_M => {}
-        insts::OP_VMSOF_M => {}
-        insts::OP_VMSIF_M => {}
-        insts::OP_VIOTA_M => {}
-        insts::OP_VID_V => {}
+        insts::OP_VMSBF_M => {
+            let i = VVtype(inst);
+            let mut found_first_mask = false;
+            for j in 0..VLEN {
+                if i.vm() == 0 && !machine.get_bit(0, j) {
+                    continue;
+                }
+                let m = machine.get_bit(i.vs2(), j);
+                if !found_first_mask && m {
+                    found_first_mask = true;
+                }
+                if found_first_mask {
+                    machine.clr_bit(i.vd(), j);
+                } else {
+                    machine.set_bit(i.vd(), j);
+                }
+            }
+        }
+        insts::OP_VMSOF_M => {
+            let i = VVtype(inst);
+            let mut found_first_mask = false;
+            for j in 0..VLEN {
+                if i.vm() == 0 && !machine.get_bit(0, j) {
+                    continue;
+                }
+                let m = machine.get_bit(i.vs2(), j);
+                if !found_first_mask && m {
+                    found_first_mask = true;
+                    machine.set_bit(i.vd(), j);
+                    continue;
+                }
+            }
+        }
+        insts::OP_VMSIF_M => {
+            let i = VVtype(inst);
+            let mut found_first_mask = false;
+            for j in 0..VLEN {
+                if i.vm() == 0 && !machine.get_bit(0, j) {
+                    continue;
+                }
+                let m = machine.get_bit(i.vs2(), j);
+                if !found_first_mask && m {
+                    found_first_mask = true;
+                    machine.set_bit(i.vd(), j);
+                    continue;
+                }
+                if found_first_mask {
+                    machine.clr_bit(i.vd(), j);
+                } else {
+                    machine.set_bit(i.vd(), j);
+                }
+            }
+        }
+        insts::OP_VIOTA_M => {
+            // TODO
+            return Err(Error::InvalidOp(op));
+        }
+        insts::OP_VID_V => {
+            let i = VVtype(inst);
+            let sew = machine.vsew();
+            for j in 0..VLEN {
+                if i.vm() == 0 && !machine.get_bit(0, j) {
+                    continue;
+                }
+                match sew {
+                    8 => U8::from(j as u8).save(machine.element_mut(i.vd(), sew, j)),
+                    16 => U16::from(j as u16).save(machine.element_mut(i.vd(), sew, j)),
+                    32 => U32::from(j as u16).save(machine.element_mut(i.vd(), sew, j)),
+                    64 => U64::from(j as u16).save(machine.element_mut(i.vd(), sew, j)),
+                    128 => U128::from(j as u16).save(machine.element_mut(i.vd(), sew, j)),
+                    256 => U256::from(j as u16).save(machine.element_mut(i.vd(), sew, j)),
+                    512 => U512::from(j as u16).save(machine.element_mut(i.vd(), sew, j)),
+                    1024 => U1024::from(j as u16).save(machine.element_mut(i.vd(), sew, j)),
+                    _ => return Err(Error::Unexpected),
+                }
+            }
+        }
         insts::OP_VMV_X_S => {}
         insts::OP_VMV_S_X => {}
         insts::OP_VCOMPRESS_VM => {}
@@ -4802,14 +4873,30 @@ pub fn execute_instruction<Mac: Machine>(
         insts::OP_VRGATHEREI16_VV => {}
         insts::OP_VRGATHER_VI => {}
         insts::OP_VFIRST_M => {
-            let i = Rtype(inst);
-            let m = U2048::read(machine.element_ref(i.rs2(), VLEN as u64, 0));
+            let i = VVtype(inst);
+            let m = if i.vm() == 0 {
+                U2048::read(machine.element_ref(i.vs2(), VLEN as u64, 0))
+                    & U2048::read(machine.element_ref(0, VLEN as u64, 0))
+            } else {
+                U2048::read(machine.element_ref(i.vs2(), VLEN as u64, 0))
+            };
             let r = m.trailing_zeros();
             if r == 2048 {
-                update_register(machine, i.rd(), Mac::REG::from_u64(0xffff_ffff_ffff_ffff));
+                update_register(machine, i.vd(), Mac::REG::from_u64(0xffff_ffff_ffff_ffff));
             } else {
-                update_register(machine, i.rd(), Mac::REG::from_u32(r));
+                update_register(machine, i.vd(), Mac::REG::from_u32(r));
             }
+        }
+        insts::OP_VCPOP_M => {
+            let i = VVtype(inst);
+            let m = if i.vm() == 0 {
+                U2048::read(machine.element_ref(i.vs2(), VLEN as u64, 0))
+                    & U2048::read(machine.element_ref(0, VLEN as u64, 0))
+            } else {
+                U2048::read(machine.element_ref(i.vs2(), VLEN as u64, 0))
+            };
+            let r = m.count_ones();
+            update_register(machine, i.vd(), Mac::REG::from_u32(r));
         }
         _ => return Err(Error::InvalidOp(op)),
     };

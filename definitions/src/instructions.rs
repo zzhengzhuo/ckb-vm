@@ -447,7 +447,7 @@ pub const OP_VREDMAXU_VS: InstructionOpcode = 0x17f1;
 pub const OP_VREDMAX_VS: InstructionOpcode = 0x18f1;
 pub const OP_VWREDSUMU_VS: InstructionOpcode = 0x19f1;
 pub const OP_VWREDSUM_VS: InstructionOpcode = 0x1af1;
-pub const OP_VCPOP: InstructionOpcode = 0x1bf1;
+pub const OP_VCPOP_M: InstructionOpcode = 0x1bf1;
 pub const OP_VMSBF_M: InstructionOpcode = 0x1cf1;
 pub const OP_VMSOF_M: InstructionOpcode = 0x1df1;
 pub const OP_VMSIF_M: InstructionOpcode = 0x1ef1;
@@ -883,7 +883,7 @@ pub const INSTRUCTION_OPCODE_NAMES_LEVEL2: [&str;
     "VREDMAX_VS",
     "VWREDSUMU_VS",
     "VWREDSUM_VS",
-    "VCPOP",
+    "VCPOP_M",
     "VMSBF_M",
     "VMSOF_M",
     "VMSIF_M",

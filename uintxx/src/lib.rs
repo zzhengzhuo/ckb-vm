@@ -109,6 +109,9 @@ pub trait Element:
     /// Returns the number of trailing zeros in the binary representation of self.
     fn trailing_zeros(self) -> u32;
 
+    /// Returns the number of ones in the binary representation of self.
+    fn count_ones(self) -> u32;
+
     /// Compare signed.
     fn cmp_s(&self, other: &Self) -> std::cmp::Ordering;
 
@@ -882,6 +885,10 @@ macro_rules! uint_wrap_impl {
                 self.0.trailing_zeros()
             }
 
+            fn count_ones(self) -> u32 {
+                self.0.count_ones()
+            }
+
             fn cmp_s(&self, other: &Self) -> std::cmp::Ordering {
                 (self.0 as $sint).cmp(&(other.0 as $sint))
             }
@@ -1415,6 +1422,10 @@ macro_rules! uint_impl {
                 } else {
                     self.lo.trailing_zeros()
                 }
+            }
+
+            fn count_ones(self) -> u32 {
+                self.lo.count_ones() + self.hi.count_ones()
             }
 
             fn cmp_s(&self, other: &Self) -> std::cmp::Ordering {
