@@ -683,6 +683,7 @@ pub fn factory<R: Register>(instruction_bits: u32, _: u32) -> Option<Instruction
                     x if x & 0b11111100000011111111000001111111 == 0b01010000000000010010000001010111 => Some(insts::OP_VMSOF_M),
                     x if x & 0b11111100000011111111000001111111 == 0b01010000000010000010000001010111 => Some(insts::OP_VIOTA_M),
                     x if x & 0b11111101111111111111000001111111 == 0b01010000000010001010000001010111 => Some(insts::OP_VID_V),
+                    x if x & 0b11111110000011111111000001111111 == 0b01000010000000000010000001010111 => Some(insts::OP_VMV_X_S),
                     _ => None,
                 };
                 inst_opt.map(|inst| {
@@ -833,6 +834,7 @@ pub fn factory<R: Register>(instruction_bits: u32, _: u32) -> Option<Instruction
                     x if x & 0b11111100000000000111000001111111 == 0b11110100000000000110000001010111 => Some(insts::OP_VWMACC_VX),
                     x if x & 0b11111100000000000111000001111111 == 0b11111100000000000110000001010111 => Some(insts::OP_VWMACCSU_VX),
                     x if x & 0b11111100000000000111000001111111 == 0b11111000000000000110000001010111 => Some(insts::OP_VWMACCUS_VX),
+                    x if x & 0b11111111111100000111000001111111 == 0b01000010000000000110000001010111 => Some(insts::OP_VMV_S_X),
                     _ => None,
                 };
                 inst_opt.map(|inst| {

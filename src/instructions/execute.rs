@@ -4859,8 +4859,66 @@ pub fn execute_instruction<Mac: Machine>(
                 }
             }
         }
-        insts::OP_VMV_X_S => {}
-        insts::OP_VMV_S_X => {}
+        insts::OP_VMV_X_S => {
+            let i = VVtype(inst);
+            let sew = machine.vsew();
+            let r = match sew {
+                8 => U8::read(machine.element_ref(i.vs2(), sew, 0)).0 as i8 as i64 as u64,
+                16 => U16::read(machine.element_ref(i.vs2(), sew, 0)).0 as i16 as i64 as u64,
+                32 => U32::read(machine.element_ref(i.vs2(), sew, 0)).0 as i32 as i64 as u64,
+                64 => U64::read(machine.element_ref(i.vs2(), sew, 0)).u64(),
+                128 => U128::read(machine.element_ref(i.vs2(), sew, 0)).u64(),
+                256 => U256::read(machine.element_ref(i.vs2(), sew, 0)).u64(),
+                512 => U512::read(machine.element_ref(i.vs2(), sew, 0)).u64(),
+                1024 => U1024::read(machine.element_ref(i.vs2(), sew, 0)).u64(),
+                _ => return Err(Error::Unexpected),
+            };
+            update_register(machine, i.vd(), Mac::REG::from_u64(r));
+        }
+        insts::OP_VMV_S_X => {
+            let i = VVtype(inst);
+            let sew = machine.vsew();
+            match sew {
+                8 => U8::vx_s(machine.registers()[i.vs2()].to_u64()).save(machine.element_mut(
+                    i.vd(),
+                    sew,
+                    0,
+                )),
+                16 => U16::vx_s(machine.registers()[i.vs2()].to_u64()).save(machine.element_mut(
+                    i.vd(),
+                    sew,
+                    0,
+                )),
+                32 => U32::vx_s(machine.registers()[i.vs2()].to_u64()).save(machine.element_mut(
+                    i.vd(),
+                    sew,
+                    0,
+                )),
+                64 => U64::vx_s(machine.registers()[i.vs2()].to_u64()).save(machine.element_mut(
+                    i.vd(),
+                    sew,
+                    0,
+                )),
+                128 => U128::vx_s(machine.registers()[i.vs2()].to_u64()).save(machine.element_mut(
+                    i.vd(),
+                    sew,
+                    0,
+                )),
+                256 => U256::vx_s(machine.registers()[i.vs2()].to_u64()).save(machine.element_mut(
+                    i.vd(),
+                    sew,
+                    0,
+                )),
+                512 => U512::vx_s(machine.registers()[i.vs2()].to_u64()).save(machine.element_mut(
+                    i.vd(),
+                    sew,
+                    0,
+                )),
+                1024 => U1024::vx_s(machine.registers()[i.vs2()].to_u64())
+                    .save(machine.element_mut(i.vd(), sew, 0)),
+                _ => return Err(Error::Unexpected),
+            };
+        }
         insts::OP_VCOMPRESS_VM => {}
         insts::OP_VSLIDE1UP_VX => {}
         insts::OP_VSLIDEUP_VX => {}
