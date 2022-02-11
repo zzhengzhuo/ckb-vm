@@ -4931,9 +4931,153 @@ pub fn execute_instruction<Mac: Machine>(
                 }
             }
         }
-        insts::OP_VSLIDE1UP_VX => {}
-        insts::OP_VSLIDEUP_VX => {}
-        insts::OP_VSLIDEUP_VI => {}
+        insts::OP_VSLIDE1UP_VX => {
+            let i = VXtype(inst);
+            let sew = machine.vsew();
+            match sew {
+                8 => {
+                    let vd0 = U8::vx_s(machine.registers()[i.rs1()].to_u64());
+                    vd0.save(machine.element_mut(i.vd(), sew, 0));
+                    for j in 1..machine.vl() {
+                        if i.vm() == 0 && machine.get_bit(0, j as usize) {
+                            continue;
+                        }
+                        let data = machine.element_ref(i.vs2(), sew, (j - 1) as usize).to_vec();
+                        machine
+                            .element_mut(i.vd(), sew, j as usize)
+                            .copy_from_slice(&data);
+                    }
+                }
+                16 => {
+                    let vd0 = U16::vx_s(machine.registers()[i.rs1()].to_u64());
+                    vd0.save(machine.element_mut(i.vd(), sew, 0));
+                    for j in 1..machine.vl() {
+                        if i.vm() == 0 && machine.get_bit(0, j as usize) {
+                            continue;
+                        }
+                        let data = machine.element_ref(i.vs2(), sew, (j - 1) as usize).to_vec();
+                        machine
+                            .element_mut(i.vd(), sew, j as usize)
+                            .copy_from_slice(&data);
+                    }
+                }
+                32 => {
+                    let vd0 = U32::vx_s(machine.registers()[i.rs1()].to_u64());
+                    vd0.save(machine.element_mut(i.vd(), sew, 0));
+                    for j in 1..machine.vl() {
+                        if i.vm() == 0 && machine.get_bit(0, j as usize) {
+                            continue;
+                        }
+                        let data = machine.element_ref(i.vs2(), sew, (j - 1) as usize).to_vec();
+                        machine
+                            .element_mut(i.vd(), sew, j as usize)
+                            .copy_from_slice(&data);
+                    }
+                }
+                64 => {
+                    let vd0 = U64::vx_s(machine.registers()[i.rs1()].to_u64());
+                    vd0.save(machine.element_mut(i.vd(), sew, 0));
+                    for j in 1..machine.vl() {
+                        if i.vm() == 0 && machine.get_bit(0, j as usize) {
+                            continue;
+                        }
+                        let data = machine.element_ref(i.vs2(), sew, (j - 1) as usize).to_vec();
+                        machine
+                            .element_mut(i.vd(), sew, j as usize)
+                            .copy_from_slice(&data);
+                    }
+                }
+                128 => {
+                    let vd0 = U128::vx_s(machine.registers()[i.rs1()].to_u64());
+                    vd0.save(machine.element_mut(i.vd(), sew, 0));
+                    for j in 1..machine.vl() {
+                        if i.vm() == 0 && machine.get_bit(0, j as usize) {
+                            continue;
+                        }
+                        let data = machine.element_ref(i.vs2(), sew, (j - 1) as usize).to_vec();
+                        machine
+                            .element_mut(i.vd(), sew, j as usize)
+                            .copy_from_slice(&data);
+                    }
+                }
+                256 => {
+                    let vd0 = U256::vx_s(machine.registers()[i.rs1()].to_u64());
+                    vd0.save(machine.element_mut(i.vd(), sew, 0));
+                    for j in 1..machine.vl() {
+                        if i.vm() == 0 && machine.get_bit(0, j as usize) {
+                            continue;
+                        }
+                        let data = machine.element_ref(i.vs2(), sew, (j - 1) as usize).to_vec();
+                        machine
+                            .element_mut(i.vd(), sew, j as usize)
+                            .copy_from_slice(&data);
+                    }
+                }
+                512 => {
+                    let vd0 = U512::vx_s(machine.registers()[i.rs1()].to_u64());
+                    vd0.save(machine.element_mut(i.vd(), sew, 0));
+                    for j in 1..machine.vl() {
+                        if i.vm() == 0 && machine.get_bit(0, j as usize) {
+                            continue;
+                        }
+                        let data = machine.element_ref(i.vs2(), sew, (j - 1) as usize).to_vec();
+                        machine
+                            .element_mut(i.vd(), sew, j as usize)
+                            .copy_from_slice(&data);
+                    }
+                }
+                1024 => {
+                    let vd0 = U1024::vx_s(machine.registers()[i.rs1()].to_u64());
+                    vd0.save(machine.element_mut(i.vd(), sew, 0));
+                    for j in 1..machine.vl() {
+                        if i.vm() == 0 && machine.get_bit(0, j as usize) {
+                            continue;
+                        }
+                        let data = machine.element_ref(i.vs2(), sew, (j - 1) as usize).to_vec();
+                        machine
+                            .element_mut(i.vd(), sew, j as usize)
+                            .copy_from_slice(&data);
+                    }
+                }
+                _ => return Err(Error::Unexpected),
+            }
+        }
+        insts::OP_VSLIDEUP_VX => {
+            let i = VXtype(inst);
+            let sew = machine.vsew();
+            let offset = machine.registers()[i.rs1()].to_u64();
+            if offset < machine.vl() {
+                for j in offset..machine.vl() {
+                    if i.vm() == 0 && machine.get_bit(0, j as usize) {
+                        continue;
+                    }
+                    let data = machine
+                        .element_ref(i.vs2(), sew, (j - offset) as usize)
+                        .to_vec();
+                    machine
+                        .element_mut(i.vd(), sew, j as usize)
+                        .copy_from_slice(&data);
+                }
+            }
+        }
+        insts::OP_VSLIDEUP_VI => {
+            let i = VItype(inst);
+            let sew = machine.vsew();
+            let offset = i.immediate_u() as u64;
+            if offset < machine.vl() {
+                for j in offset..machine.vl() {
+                    if i.vm() == 0 && machine.get_bit(0, j as usize) {
+                        continue;
+                    }
+                    let data = machine
+                        .element_ref(i.vs2(), sew, (j - offset) as usize)
+                        .to_vec();
+                    machine
+                        .element_mut(i.vd(), sew, j as usize)
+                        .copy_from_slice(&data);
+                }
+            }
+        }
         insts::OP_VSLIDE1DOWN_VX => {}
         insts::OP_VSLIDEDOWN_VX => {}
         insts::OP_VSLIDEDOWN_VI => {}
