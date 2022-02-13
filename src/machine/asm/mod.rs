@@ -149,6 +149,10 @@ impl CoreMachine for Box<AsmCoreMachine> {
         self.vl
     }
 
+    fn vlmax(&self) -> u64 {
+        self.vlmax
+    }
+
     fn vsew(&self) -> u64 {
         self.vsew
     }

@@ -360,6 +360,10 @@ impl CoreMachine for LabelGatheringMachine {
         unreachable!()
     }
 
+    fn vlmax(&self) -> u64 {
+        unreachable!()
+    }
+
     fn vsew(&self) -> u64 {
         unreachable!()
     }
@@ -752,6 +756,10 @@ impl CoreMachine for AotCompilingMachine {
     }
 
     fn vl(&self) -> u64 {
+        unreachable!()
+    }
+
+    fn vlmax(&self) -> u64 {
         unreachable!()
     }
 

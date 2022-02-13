@@ -54,6 +54,7 @@ pub trait CoreMachine {
     fn clr_bit(&mut self, reg: usize, n: usize);
     fn set_vl(&mut self, rd: usize, rs1: usize, avl: u64, new_type: u64);
     fn vl(&self) -> u64;
+    fn vlmax(&self) -> u64;
     fn vsew(&self) -> u64;
     fn vlmul(&self) -> i32;
     fn vta(&self) -> bool;
@@ -409,6 +410,10 @@ impl<R: Register, M: Memory<REG = R>> CoreMachine for DefaultCoreMachine<R, M> {
         self.vl
     }
 
+    fn vlmax(&self) -> u64 {
+        self.vlmax
+    }
+
     fn vsew(&self) -> u64 {
         self.vsew
     }
@@ -571,6 +576,10 @@ impl<Inner: CoreMachine> CoreMachine for DefaultMachine<'_, Inner> {
 
     fn vl(&self) -> u64 {
         self.inner.vl()
+    }
+
+    fn vlmax(&self) -> u64 {
+        self.inner.vlmax()
     }
 
     fn vsew(&self) -> u64 {

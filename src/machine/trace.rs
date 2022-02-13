@@ -98,6 +98,10 @@ impl<Inner: SupportMachine> CoreMachine for TraceMachine<'_, Inner> {
         self.machine.vl()
     }
 
+    fn vlmax(&self) -> u64 {
+        self.machine.vlmax()
+    }
+
     fn vsew(&self) -> u64 {
         self.machine.vsew()
     }
